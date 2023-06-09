@@ -9,13 +9,13 @@ class ThemeServices{
 
   //loadthemeformstore will check if there is a value present in the store for key
   //if there is then it will return true else will return false
-  bool _loadThemeFromStore()=> _store.read(_key)??false;
+  bool loadThemeFromStore()=> _store.read(_key)??false;
   //this getter function checks loadthemes returned value is true or false
   //if false means no value for that key , that is app is just loaded, so for false it will set lightmode
-  ThemeMode get theme=>_loadThemeFromStore()?ThemeMode.dark:ThemeMode.light;
+  ThemeMode get theme=>loadThemeFromStore()?ThemeMode.dark:ThemeMode.light;
   void switchtheme(){
-    Get.changeThemeMode(_loadThemeFromStore()?ThemeMode.light:ThemeMode.dark);
-    _savethemetostore(!_loadThemeFromStore());
+    Get.changeThemeMode(loadThemeFromStore()?ThemeMode.light:ThemeMode.dark);
+    _savethemetostore(!loadThemeFromStore());
     //loadthemefromstore return true that is there is a value for key isdarkmode
     //that means currently darkmode is on, so change it to light
   }
