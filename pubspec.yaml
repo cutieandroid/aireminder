@@ -40,6 +40,8 @@ dependencies:
   flutter_local_notifications: ^9.3.2
   intl:
   timezone:
+  google_fonts:
+  date_picker_timeline:
 
 
 dev_dependencies:
