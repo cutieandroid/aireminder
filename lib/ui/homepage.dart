@@ -1,5 +1,9 @@
+
+
+import 'package:aireminder/Controllers/taskcontroller.dart';
 import 'package:aireminder/services/notiication_service.dart';
 import 'package:aireminder/services/themeservices.dart';
+import 'package:aireminder/ui/TaskForm.dart';
 import 'package:aireminder/ui/homepagewidgets/AddTaskButton.dart';
 import 'package:aireminder/ui/theme.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
@@ -17,6 +21,7 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+  final _taskcontroller= Get.put(TaskController());
   var selecteddate;
 
   var notifyhelper;
@@ -25,6 +30,7 @@ class _HomepageState extends State<Homepage> {
     super.initState();
     notifyhelper= new Notifyhelper();
     notifyhelper.initializenotification();
+    _taskcontroller.gettasks();
 
   }
 
@@ -35,24 +41,10 @@ class _HomepageState extends State<Homepage> {
 
           body: Column(
             children: [
-              _addtasktaskbar(),
-              Container(
-                child: DatePicker(
-                  DateTime.now(),
-                  height: 100,
-                  width: 80,
-                  initialSelectedDate: DateTime.now(),
-                  selectionColor: primcolor,
-                  selectedTextColor: Colors.white,
-                  dateTextStyle: GoogleFonts.lato(
-                    textStyle: TextStyle(fontSize: 20,fontWeight:FontWeight.w600,color: Colors.grey)
-                  ),
-                  onDateChange: (date){
-                    selecteddate=date;
-                  },
-
-                ),
-              )
+              _addtasktaskbar(_taskcontroller),
+              _datepickerwidget(selecteddate),
+              _showtasks(_taskcontroller),
+              
             ],
           ),
 
@@ -60,7 +52,61 @@ class _HomepageState extends State<Homepage> {
   }
 }
 
-_addtasktaskbar(){
+_showtasks (TaskController _taskcontroller){
+  return Expanded(
+    child: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 10),
+      child: Obx((){
+        return ListView.builder(
+          itemCount:_taskcontroller.tasklist.length,
+            itemBuilder: (_,context){
+            print(_taskcontroller.tasklist.length);
+
+          return Container(
+            margin: EdgeInsets.symmetric(vertical: 10),
+            width: 100,
+            height: 50,
+            color: primcolor,
+          );
+
+
+        });
+      }),
+    ),
+  );
+
+}
+
+_datepickerwidget( selecteddate){
+  return
+    Container(
+      margin: EdgeInsets.symmetric(horizontal: 5),
+      child: DatePicker(
+        DateTime.now(),
+        height: 100,
+        width: 80,
+        initialSelectedDate: DateTime.now(),
+        selectionColor: primcolor,
+        selectedTextColor: Colors.white,
+        dateTextStyle: GoogleFonts.lato(
+            textStyle: TextStyle(fontSize: 20,fontWeight:FontWeight.w600,color: Colors.grey),
+        ),
+        monthTextStyle: GoogleFonts.lato(
+          textStyle: TextStyle(fontSize: 14,fontWeight:FontWeight.w600,color: ThemeServices().loadThemeFromStore()?Colors.white:Colors.black),
+        ),
+        dayTextStyle:GoogleFonts.lato(
+          textStyle: TextStyle(fontSize: 12,fontWeight:FontWeight.w600,color: ThemeServices().loadThemeFromStore()?Colors.white:Colors.black),
+        ) ,
+        onDateChange: (date){
+          selecteddate=date;
+        },
+
+      ),
+    );
+      
+}
+
+_addtasktaskbar(TaskController _taskcontroller){
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
     child: Row(
@@ -77,7 +123,7 @@ _addtasktaskbar(){
         ),
         //ElevatedButton(onPressed: ()=>null, child: Text("+addtask")),
 
-        AddTaskButton(ontap: ()=>null, label: "+AddTask")
+        AddTaskButton(onTap: ()async {await Get.to(TaskForm()); _taskcontroller.gettasks();}, label: "+AddTask")
       ],
     ),
   );

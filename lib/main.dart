@@ -1,3 +1,5 @@
+import 'package:aireminder/Controllers/taskcontroller.dart';
+import 'package:aireminder/db/dbhelper.dart';
 import 'package:aireminder/services/themeservices.dart';
 import 'package:aireminder/ui/homepage.dart';
 import 'package:aireminder/ui/theme.dart';
@@ -7,6 +9,7 @@ import 'package:get_storage/get_storage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); //makessure that getstorageisinitialized
+  await DBHelper.initDb();
   await GetStorage.init();
   runApp(const MyApp());
 }

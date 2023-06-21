@@ -1,15 +1,18 @@
+import 'package:aireminder/ui/TaskForm.dart';
 import 'package:aireminder/ui/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class AddTaskButton extends StatelessWidget {
-  final Function ontap;
+  final Function()? onTap;
   final String label;
-  const AddTaskButton({Key? key, required this.ontap, required this.label}) : super(key: key);
+  const AddTaskButton({Key? key, required this.onTap, required this.label}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: ()=>null,
+      onTap: onTap,
       child: Container(
         alignment: Alignment.center,
         width: 120,

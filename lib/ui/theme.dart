@@ -46,3 +46,13 @@ TextStyle get headingstyle{
 
   );
 }
+TextStyle get inputfieldstyle{
+  return GoogleFonts.lato(
+      textStyle: const TextStyle(
+        fontSize: 15,
+        fontWeight: FontWeight.bold,
+
+      )
+
+  );
+}
