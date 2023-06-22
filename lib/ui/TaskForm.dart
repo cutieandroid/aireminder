@@ -167,7 +167,7 @@ class _TaskFormState extends State<TaskForm> {
                                         child: CircleAvatar(
                                           child: _selectedcolor==index?Icon(Icons.done):Container(),
                                           radius: 14,
-                                          backgroundColor: index==0?primcolor:index==1?Colors.yellow:Colors.pink,
+                                          backgroundColor: index==0?primcolor:index==1?Colors.brown:Colors.pink,
                                         ),
                                       ),
                                     );

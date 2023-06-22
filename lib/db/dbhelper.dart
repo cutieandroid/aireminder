@@ -21,7 +21,7 @@ class DBHelper{
             "StartTime string,endTime string,"
             "remind integer,repeat string,"
             "color integer,"
-            "isCompleted integer)",
+            "iscompleted integer)",
         );
       });
     } catch(e){
@@ -39,6 +39,13 @@ class DBHelper{
   static Future <List<Map<String,dynamic>>> query() async{
     return await _db!.query(_tablename);
   }
+  static del(Task task)async {
+    return await _db?.delete(_tablename,where: 'id=?',whereArgs: [task.id]);
+
+  }
+  static update(Task task) async{
+    return await _db?.rawUpdate('''update $_tablename set iscompleted= ? where id= ?''',[1,task.id]);
+}
 
 
 }

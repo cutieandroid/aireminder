@@ -17,4 +17,13 @@ class TaskController extends GetxController{
      tasklist.assignAll(tasks.map((data)=>new Task.fromJson(data)).toList());
 
    }
+
+   void deltask(Task task){
+    var val= DBHelper.del(task);
+    print(val);
+
+   }
+   void markcomplete( Task task){
+     DBHelper.update(task);
+   }
 }
